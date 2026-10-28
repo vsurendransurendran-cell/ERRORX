@@ -11,7 +11,6 @@ import {
   Sparkles,
   Info
 } from 'lucide-react';
-import { PRESETS, CodePreset } from '../constants/presets';
 
 interface CodeEditorProps {
   code: string;
@@ -40,7 +39,6 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [showTraceback, setShowTraceback] = useState(Boolean(traceback.trim()));
-  const [selectedPresetId, setSelectedPresetId] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Synchronize line numbers
@@ -73,25 +71,9 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePresetChange = (presetId: string) => {
-    setSelectedPresetId(presetId);
-    const found = PRESETS.find(p => p.id === presetId);
-    if (found) {
-      setCode(found.code);
-      if (found.traceback) {
-        setTraceback(found.traceback);
-        setShowTraceback(true);
-      } else {
-        setTraceback('');
-        setShowTraceback(false);
-      }
-    }
-  };
-
   const handleClear = () => {
     setCode('');
     setTraceback('');
-    setSelectedPresetId('');
   };
 
   return (
@@ -107,36 +89,24 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           <span className="text-slate-400 font-mono">{code.length} chars</span>
         </div>
 
-        {/* Preset Selector & Action Buttons */}
+        {/* Action Buttons */}
         <div className="flex items-center gap-2">
-          <select
-            value={selectedPresetId}
-            onChange={(e) => handlePresetChange(e.target.value)}
-            className="bg-slate-800 text-slate-200 border border-slate-700 rounded-md px-2.5 py-1 text-xs focus:ring-1 focus:ring-sky-500 focus:outline-none"
-            title="Load sample error scenarios"
-          >
-            <option value="">Load Error Preset...</option>
-            {PRESETS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.category}: {p.name}
-              </option>
-            ))}
-          </select>
-
           <button
             onClick={handleCopy}
-            className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1 text-slate-300 hover:text-cyan-300 hover:bg-slate-800 rounded transition-colors"
             title="Copy source code"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-cyan-400" /> : <Copy className="w-3.5 h-3.5" />}
+            <span className="text-[11px] hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
           <button
             onClick={handleClear}
-            className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded transition-colors"
             title="Clear editor"
           >
             <Trash2 className="w-3.5 h-3.5" />
+            <span className="text-[11px] hidden sm:inline">Clear</span>
           </button>
         </div>
       </div>
@@ -166,14 +136,9 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
             value={code}
             onChange={(e) => setCode(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="# Paste or type Python code here...
-# Example:
-def calculate_area(radius):
-    if radius <= 0
-        return 0
-    return 3.14159 * radius ** 2"
+            placeholder="# Paste or write Python source code here..."
             spellCheck={false}
-            className="w-full h-full p-3 bg-transparent text-slate-200 resize-none font-mono text-sm leading-6 focus:outline-none focus:ring-0 selection:bg-sky-900/60"
+            className="w-full h-full p-3 bg-transparent text-slate-200 resize-none font-mono text-sm leading-6 focus:outline-none focus:ring-0 selection:bg-cyan-900/60"
           />
         </div>
       </div>
@@ -216,36 +181,36 @@ IndexError: list index out of range"
       </div>
 
       {/* Bottom Control Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-slate-900/95 border-t border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-black/95 border-t border-cyan-950">
         {/* AI Explanations Toggle */}
         <label className="flex items-center gap-2.5 text-xs text-slate-300 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={enableAi}
             onChange={(e) => setEnableAi(e.target.checked)}
-            className="w-4 h-4 rounded text-sky-600 focus:ring-sky-500 border-slate-700 bg-slate-800"
+            className="w-4 h-4 rounded text-cyan-500 focus:ring-cyan-400 border-slate-700 bg-slate-900"
           />
           <div className="flex items-center gap-1.5">
-            <Sparkles className={`w-3.5 h-3.5 ${enableAi ? 'text-amber-400' : 'text-slate-500'}`} />
-            <span className={enableAi ? 'font-medium text-slate-100' : 'text-slate-400'}>
-              AI Explanation (Gemini 3.8 Flash)
+            <Sparkles className={`w-3.5 h-3.5 ${enableAi ? 'text-cyan-400' : 'text-slate-600'}`} />
+            <span className={enableAi ? 'font-semibold text-cyan-300' : 'text-slate-400'}>
+              AI Mentorship (Gemini 3.8 Flash)
             </span>
           </div>
         </label>
 
-        {/* Submit Analyze Button */}
+        {/* Submit Analyze Button - Electric Blue Glowing */}
         <button
           onClick={onAnalyze}
           disabled={isAnalyzing || (!code.trim() && !traceback.trim())}
-          className={`flex items-center gap-2 px-5 py-2 text-sm font-semibold rounded-lg text-white transition-all shadow-md ${
+          className={`flex items-center gap-2 px-6 py-2.5 text-sm font-extrabold rounded-lg transition-all duration-200 cursor-pointer ${
             isAnalyzing || (!code.trim() && !traceback.trim())
-              ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50'
-              : 'bg-sky-600 hover:bg-sky-500 active:bg-sky-700 cursor-pointer border border-sky-400/30'
+              ? 'bg-slate-900 text-slate-600 cursor-not-allowed border border-slate-800'
+              : 'bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-black shadow-[0_0_25px_rgba(0,210,255,0.45)] hover:shadow-[0_0_35px_rgba(0,210,255,0.7)] active:scale-95'
           }`}
         >
           {isAnalyzing ? (
             <>
-              <svg className="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin w-4 h-4 text-black" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
               </svg>
@@ -253,7 +218,7 @@ IndexError: list index out of range"
             </>
           ) : (
             <>
-              <Play className="w-4 h-4 fill-current" />
+              <Play className="w-4 h-4 fill-black" />
               <span>Analyze Python Code</span>
             </>
           )}

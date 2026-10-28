@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    background-color: #090d16;
+    background-color: #000000;
     color: #e2e8f0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -13,18 +13,18 @@
   }
 }
 
-/* Custom scrollbars */
+/* Electric blue custom scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #0e2b3d;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #00e5ff;
 }

@@ -230,10 +230,16 @@ Please provide an intelligent, encouraging explanation designed for a Python beg
 
 Keep it concise, well-structured with clear markdown headings, and encouraging. Never invent false runtime guarantees.`;
 
-          const response = await ai.models.generateContent({
+          const aiPromise = ai.models.generateContent({
             model: 'gemini-3.8-flash',
             contents: prompt
           });
+
+          const timeoutPromise = new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error('AI service timed out after 2500ms')), 2500)
+          );
+
+          const response = await Promise.race([aiPromise, timeoutPromise]);
 
           aiExplanation = {
             available: true,
@@ -245,7 +251,7 @@ Keep it concise, well-structured with clear markdown headings, and encouraging. 
         } catch (aiErr: any) {
           aiExplanation = {
             available: false,
-            reason: `AI service encountered a temporary error: ${aiErr.message || 'API request failed'}. Deterministic static analysis remains 100% active.`,
+            reason: `AI notice: ${aiErr.message || 'Service unavailable'}. Complete deterministic AST analysis was performed successfully.`,
             source: 'local_fallback'
           };
         }
