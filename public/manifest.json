@@ -1,0 +1,22 @@
+{
+  "short_name": "ERRORX",
+  "name": "ERRORX - Python Error Analysis & Debugging Assistant",
+  "description": "Deterministic Python AST analysis, error diagnosis, root cause explanations, and code correction comparison.",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' fill='%23090d16'><rect width='192' height='192' rx='36' fill='%230f172a'/><polygon points='104 16 24 112 96 112 88 176 168 80 96 80 104 16' fill='%2338bdf8'/></svg>",
+      "type": "image/svg+xml",
+      "sizes": "192x192"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23090d16'><rect width='512' height='512' rx='96' fill='%230f172a'/><polygon points='277 42 64 298 256 298 234 470 448 214 256 214 277 42' fill='%2338bdf8'/></svg>",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "display": "standalone",
+  "orientation": "portrait-primary"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "ERRORX - Python Error Analysis & Debugging Assistant",
+  "description": "Intelligent Python error diagnosis, AST static analysis, root-cause explanations, before-and-after fix comparisons, and beginner learning mode.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
